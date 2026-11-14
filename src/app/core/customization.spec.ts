@@ -75,8 +75,8 @@ describe('персоналізація готових букетів', () => {
     }
   });
 
-  it('персикові, малинові й рожеві півонії: фото для кожної комбінації в усіх розмірах', () => {
-    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink']) {
+  it('персикові, малинові, рожеві та рожево-білі півонії: фото для кожної комбінації в усіх розмірах', () => {
+    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo']) {
       const product = PRODUCTS.find((p) => p.id === id)!;
       for (const size of ['S', 'M', 'L'] as const) {
         for (const pack of PACKAGING_OPTIONS.map((o) => o.id).concat([null as unknown as string])) {
@@ -119,6 +119,21 @@ describe('персоналізація готових букетів', () => {
     expect(customizedPrice(2600, base, p.optionPrices)).toBe(2600);
     expect(customizedPrice(2600, { ...base, packagingId: 'white-matte' }, p.optionPrices)).toBe(2700);
     expect(customizedPrice(2600, { ...base, ribbonId: 'blue' }, p.optionPrices)).toBe(2650);
+  });
+
+  it('рожево-білі півонії: головне фото каталогу = біле пакування + рожева стрічка (S, M, L), безкоштовні лише вони', () => {
+    const p = PRODUCTS.find((x) => x.id === 'peony-duo')!;
+    expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: 'pink' });
+    expect(p.image).toBe(variantPhoto(p, 'M', 'white-matte', 'pink')!.src);
+    for (const size of ['S', 'M', 'L'] as const) {
+      expect(p.sizeOverrides?.[size]?.image).toBe(variantPhoto(p, size, 'white-matte', 'pink')!.src);
+    }
+    const base = { packagingId: 'white-matte', ribbonId: 'pink', cardText: '' };
+    expect(customizedPrice(2800, base, p.optionPrices)).toBe(2800);
+    expect(customizedPrice(2800, { ...base, ribbonId: 'milk' }, p.optionPrices)).toBe(2830);
+    expect(customizedPrice(2800, { ...base, ribbonId: 'blue' }, p.optionPrices)).toBe(2850);
+    expect(customizedPrice(2800, { ...base, packagingId: 'powder' }, p.optionPrices)).toBe(2900);
+    expect(customizedPrice(2800, { ...base, packagingId: 'transparent' }, p.optionPrices)).toBe(2950);
   });
 
   it('якщо точної комбінації немає — найближче фото з позначкою «умовне»', () => {
