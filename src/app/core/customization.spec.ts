@@ -75,8 +75,8 @@ describe('персоналізація готових букетів', () => {
     }
   });
 
-  it('персикові, малинові та всі півонії: фото для кожної комбінації в усіх розмірах', () => {
-    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo', 'peony-white']) {
+  it('персикові, малинові, півонії та мікс гортензій: фото для кожної комбінації в усіх розмірах', () => {
+    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo', 'peony-white', 'hydrangea-mix']) {
       const product = PRODUCTS.find((p) => p.id === id)!;
       for (const size of ['S', 'M', 'L'] as const) {
         for (const pack of PACKAGING_OPTIONS.map((o) => o.id).concat([null as unknown as string])) {
@@ -134,6 +134,50 @@ describe('персоналізація готових букетів', () => {
     expect(customizedPrice(2800, { ...base, ribbonId: 'blue' }, p.optionPrices)).toBe(2850);
     expect(customizedPrice(2800, { ...base, packagingId: 'powder' }, p.optionPrices)).toBe(2900);
     expect(customizedPrice(2800, { ...base, packagingId: 'transparent' }, p.optionPrices)).toBe(2950);
+  });
+
+  it('мікс гортензій: головне фото каталогу = біле пакування + блакитна стрічка (S, M, L), безкоштовні лише вони', () => {
+    const p = PRODUCTS.find((x) => x.id === 'hydrangea-mix')!;
+    expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: 'blue' });
+    expect(p.image).toBe(variantPhoto(p, 'M', 'white-matte', 'blue')!.src);
+    for (const size of ['S', 'M', 'L'] as const) {
+      expect(p.sizeOverrides?.[size]?.image).toBe(variantPhoto(p, size, 'white-matte', 'blue')!.src);
+    }
+    const base = { packagingId: 'white-matte', ribbonId: 'blue', cardText: '' };
+    expect(customizedPrice(4900, base, p.optionPrices)).toBe(4900);
+    expect(customizedPrice(4900, { ...base, ribbonId: 'milk' }, p.optionPrices)).toBe(4930);
+    expect(customizedPrice(4900, { ...base, ribbonId: 'red' }, p.optionPrices)).toBe(4930);
+  });
+
+  it('рожеві гортензії: головне фото = біле пакування + рожева стрічка (S, M, L), фото всіх комбінацій', () => {
+    const p = PRODUCTS.find((x) => x.id === 'hydrangea-pink')!;
+    expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: 'pink' });
+    expect(p.image).toBe(variantPhoto(p, 'M', 'white-matte', 'pink')!.src);
+    for (const size of ['S', 'M', 'L'] as const) {
+      expect(p.sizeOverrides?.[size]?.image).toBe(variantPhoto(p, size, 'white-matte', 'pink')!.src);
+      for (const pack of PACKAGING_OPTIONS.map((o) => o.id).concat([null as unknown as string])) {
+        for (const ribbon of RIBBON_OPTIONS.map((o) => o.id)) {
+          // бракує лише фото M: прозоре пакування + біла стрічка
+          if (size === 'M' && pack === 'transparent' && ribbon === 'milk') continue;
+          expect(variantPhoto(p, size, pack, ribbon)?.exact, `${size} ${pack}|${ribbon}`).toBe(true);
+        }
+      }
+    }
+    const base = { packagingId: 'white-matte', ribbonId: 'pink', cardText: '' };
+    expect(customizedPrice(1800, base, p.optionPrices)).toBe(1800);
+    expect(customizedPrice(1800, { ...base, ribbonId: 'milk' }, p.optionPrices)).toBe(1830);
+  });
+
+  it('білі півонії: одне головне фото (біле пакування + біла стрічка) для S, M, L і картки каталогу', () => {
+    const p = PRODUCTS.find((x) => x.id === 'peony-white')!;
+    expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: 'milk' });
+    const main = variantPhoto(p, 'M', 'white-matte', 'milk')!.src;
+    expect(p.image).toBe(main);
+    for (const size of ['S', 'M', 'L'] as const) {
+      expect(p.sizeOverrides?.[size]?.image).toBe(main);
+      expect(variantPhoto(p, size, 'white-matte', 'milk')!.src).toBe(main);
+    }
+    expect(customizedPrice(2800, { packagingId: 'white-matte', ribbonId: 'milk', cardText: '' }, p.optionPrices)).toBe(2800);
   });
 
   it('якщо точної комбінації немає — найближче фото з позначкою «умовне»', () => {
