@@ -75,8 +75,8 @@ describe('персоналізація готових букетів', () => {
     }
   });
 
-  it('персикові, малинові, рожеві та рожево-білі півонії: фото для кожної комбінації в усіх розмірах', () => {
-    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo']) {
+  it('персикові, малинові та всі півонії: фото для кожної комбінації в усіх розмірах', () => {
+    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo', 'peony-white']) {
       const product = PRODUCTS.find((p) => p.id === id)!;
       for (const size of ['S', 'M', 'L'] as const) {
         for (const pack of PACKAGING_OPTIONS.map((o) => o.id).concat([null as unknown as string])) {
