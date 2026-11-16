@@ -76,7 +76,7 @@ describe('персоналізація готових букетів', () => {
   });
 
   it('персикові, малинові, півонії та мікс гортензій: фото для кожної комбінації в усіх розмірах', () => {
-    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo', 'peony-white', 'hydrangea-mix']) {
+    for (const id of ['spray-peach', 'spray-fuchsia', 'peony-pink', 'peony-duo', 'peony-white', 'hydrangea-mix', 'hydrangea-white', 'hydrangea-blue']) {
       const product = PRODUCTS.find((p) => p.id === id)!;
       for (const size of ['S', 'M', 'L'] as const) {
         for (const pack of PACKAGING_OPTIONS.map((o) => o.id).concat([null as unknown as string])) {
@@ -166,6 +166,21 @@ describe('персоналізація готових букетів', () => {
     const base = { packagingId: 'white-matte', ribbonId: 'pink', cardText: '' };
     expect(customizedPrice(1800, base, p.optionPrices)).toBe(1800);
     expect(customizedPrice(1800, { ...base, ribbonId: 'milk' }, p.optionPrices)).toBe(1830);
+  });
+
+  it('білі й блакитні гортензії: головне фото каталогу — біле пакування + біла / блакитна стрічка (S, M, L)', () => {
+    for (const [id, ribbon] of [['hydrangea-white', 'milk'], ['hydrangea-blue', 'blue']] as const) {
+      const p = PRODUCTS.find((x) => x.id === id)!;
+      expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: ribbon });
+      expect(p.image).toBe(variantPhoto(p, 'M', 'white-matte', ribbon)!.src);
+      for (const size of ['S', 'M', 'L'] as const) {
+        expect(p.sizeOverrides?.[size]?.image, id + ' ' + size).toBe(variantPhoto(p, size, 'white-matte', ribbon)!.src);
+      }
+    }
+    const blue = PRODUCTS.find((x) => x.id === 'hydrangea-blue')!;
+    const base = { packagingId: 'white-matte', ribbonId: 'blue', cardText: '' };
+    expect(customizedPrice(3200, base, blue.optionPrices)).toBe(3200);
+    expect(customizedPrice(3200, { ...base, ribbonId: 'milk' }, blue.optionPrices)).toBe(3230);
   });
 
   it('білі півонії: головне фото каталогу = біле пакування + біла стрічка, своє для кожного розміру S, M, L', () => {
