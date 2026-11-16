@@ -709,14 +709,14 @@ export const PRODUCTS: Product[] = [
       'Букет із білих півоній у прозоро-білому пакуванні з білою стрічкою. Чистий і урочистий — для весільних та особливих подій. Оберіть розмір: S, M або L.',
     composition: ['Півонія біла — 15 / 25 / 41 шт. залежно від розміру', 'Пакування біле', 'Стрічка біла'],
     sizeOverrides: {
-      S: { stems: 15, price: 1700, image: 'flowers/peony-white-white-matte-milk.jpg' },
-      M: { stems: 25, price: 2800, image: 'flowers/peony-white-white-matte-milk.jpg' },
-      L: { stems: 41, price: 4500, image: 'flowers/peony-white-white-matte-milk.jpg' },
+      S: { stems: 15, price: 1700, image: 'flowers/peony-white-s-white-matte-milk.jpg' },
+      M: { stems: 25, price: 2800, image: 'flowers/peony-white-m-white-matte-milk.jpg' },
+      L: { stems: 41, price: 4500, image: 'flowers/peony-white-l-white-matte-milk.jpg' },
     },
     photoVariants: {
       S: {
         'white-matte|red': 'flowers/peony-white-s-white-matte-red.jpg',
-        'white-matte|milk': 'flowers/peony-white-white-matte-milk.jpg',
+        'white-matte|milk': 'flowers/peony-white-s-white-matte-milk.jpg',
         'white-matte|pink': 'flowers/peony-white-s-white-matte-pink.jpg',
         'white-matte|blue': 'flowers/peony-white-s-white-matte-blue.jpg',
         'powder|red': 'flowers/peony-white-s-powder-red.jpg',
@@ -734,7 +734,7 @@ export const PRODUCTS: Product[] = [
       },
       M: {
         'white-matte|red': 'flowers/peony-white-m-white-matte-red.jpg',
-        'white-matte|milk': 'flowers/peony-white-white-matte-milk.jpg',
+        'white-matte|milk': 'flowers/peony-white-m-white-matte-milk.jpg',
         'white-matte|pink': 'flowers/peony-white-m-white-matte-pink.jpg',
         'white-matte|blue': 'flowers/peony-white-m-white-matte-blue.jpg',
         'powder|red': 'flowers/peony-white-m-powder-red.jpg',
@@ -752,7 +752,7 @@ export const PRODUCTS: Product[] = [
       },
       L: {
         'white-matte|red': 'flowers/peony-white-l-white-matte-red.jpg',
-        'white-matte|milk': 'flowers/peony-white-white-matte-milk.jpg',
+        'white-matte|milk': 'flowers/peony-white-l-white-matte-milk.jpg',
         'white-matte|pink': 'flowers/peony-white-l-white-matte-pink.jpg',
         'white-matte|blue': 'flowers/peony-white-l-white-matte-blue.jpg',
         'powder|red': 'flowers/peony-white-l-powder-red.jpg',
@@ -774,7 +774,7 @@ export const PRODUCTS: Product[] = [
     badge: 'new',
     popularity: 86,
     addedAt: '2026-11-02',
-    image: 'flowers/peony-white-white-matte-milk.jpg',
+    image: 'flowers/peony-white-m-white-matte-milk.jpg',
     art: { stems: stems(['peony', PETAL.white, 13]), wrap: '#FFFFFF', ribbon: '#FFFFFF' },
   },
   {

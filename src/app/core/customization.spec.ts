@@ -168,15 +168,17 @@ describe('персоналізація готових букетів', () => {
     expect(customizedPrice(1800, { ...base, ribbonId: 'milk' }, p.optionPrices)).toBe(1830);
   });
 
-  it('білі півонії: одне головне фото (біле пакування + біла стрічка) для S, M, L і картки каталогу', () => {
+  it('білі півонії: головне фото каталогу = біле пакування + біла стрічка, своє для кожного розміру S, M, L', () => {
     const p = PRODUCTS.find((x) => x.id === 'peony-white')!;
     expect(p.defaultVariant).toEqual({ packagingId: 'white-matte', ribbonId: 'milk' });
-    const main = variantPhoto(p, 'M', 'white-matte', 'milk')!.src;
-    expect(p.image).toBe(main);
+    expect(p.image).toBe(variantPhoto(p, 'M', 'white-matte', 'milk')!.src);
+    const srcs = new Set<string>();
     for (const size of ['S', 'M', 'L'] as const) {
-      expect(p.sizeOverrides?.[size]?.image).toBe(main);
-      expect(variantPhoto(p, size, 'white-matte', 'milk')!.src).toBe(main);
+      const src = variantPhoto(p, size, 'white-matte', 'milk')!.src;
+      expect(p.sizeOverrides?.[size]?.image).toBe(src);
+      srcs.add(src);
     }
+    expect(srcs.size).toBe(3);
     expect(customizedPrice(2800, { packagingId: 'white-matte', ribbonId: 'milk', cardText: '' }, p.optionPrices)).toBe(2800);
   });
 
