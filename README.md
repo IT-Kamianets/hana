@@ -3,7 +3,7 @@
 Курсовий проєкт: адаптивний сайт квіткового магазину з інтерактивним каталогом, кошиком,
 оформленням замовлення та конструктором букетів.
 
-**Сайт:** https://olefirenkokristina.github.io/hana/
+**Сайт:** https://hana.itkamianets.com/
 
 **Стек:** Angular 22 (standalone-компоненти, signals), TypeScript, SCSS, Vitest.
 
