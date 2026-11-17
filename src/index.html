@@ -2,8 +2,23 @@
 <html lang="uk">
   <head>
     <meta charset="utf-8" />
-    <title>HANA — квітковий магазин</title>
-    <meta name="description" content="HANA — авторські букети, сезонні квіти з персоналізацією пакування, стрічки та листівки і доставкою." />
+    <title>HANA — квітковий магазин: авторські букети та доставка</title>
+    <meta name="description" content="HANA — авторські букети з піоновидних троянд, півоній і гортензій. Обирайте розмір, пакування, стрічку та листівку — зберемо й доставимо свіжі квіти." />
+    <link rel="canonical" href="https://olefirenkokristina.github.io/hana/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HANA" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:url" content="https://olefirenkokristina.github.io/hana/" />
+    <meta property="og:title" content="HANA — квітковий магазин: авторські букети та доставка" />
+    <meta property="og:description" content="Авторські букети з піоновидних троянд, півоній і гортензій. Персоналізоване пакування, стрічка, листівка та доставка." />
+    <meta property="og:image" content="https://olefirenkokristina.github.io/hana/og-image.jpg" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="828" />
+    <meta property="og:image:alt" content="Рожеві півонії в букеті з рожевою стрічкою" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HANA — квітковий магазин: авторські букети та доставка" />
+    <meta name="twitter:description" content="Авторські букети з піоновидних троянд, півоній і гортензій. Персоналізоване пакування, стрічка, листівка та доставка." />
+    <meta name="twitter:image" content="https://olefirenkokristina.github.io/hana/og-image.jpg" />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#4A5A4A" />
@@ -12,7 +27,7 @@
       try {
         var t = JSON.parse(localStorage.getItem('hana.theme'));
         if (t !== 'light' && t !== 'dark') {
-          t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          t = 'light';
         }
         document.documentElement.dataset.theme = t;
       } catch (e) {}

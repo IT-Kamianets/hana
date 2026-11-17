@@ -6,12 +6,10 @@ export type Theme = 'light' | 'dark';
 const THEME_KEY = 'hana.theme';
 const THEME_COLORS: Record<Theme, string> = { light: '#4A5A4A', dark: '#1C1E1B' };
 
-/** Обрана тема: збережена в localStorage, інакше — системна (prefers-color-scheme). */
+/** Обрана тема: збережена в localStorage, інакше — світла за замовчуванням. */
 function initialTheme(): Theme {
   const saved = readStorage<Theme | null>(THEME_KEY, null);
-  if (saved === 'light' || saved === 'dark') return saved;
-  const prefersDark = typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: dark)').matches;
-  return prefersDark ? 'dark' : 'light';
+  return saved === 'light' || saved === 'dark' ? saved : 'light';
 }
 
 @Injectable({ providedIn: 'root' })
